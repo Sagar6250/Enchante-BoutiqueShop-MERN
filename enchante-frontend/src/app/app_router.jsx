@@ -9,6 +9,7 @@ import About from "../pages/About";
 import AddProduct from "../pages/admin/AddProduct";
 import CollectionType from "../pages/collections/CollectionType";
 import Gallery from "../pages/collections/Gallery";
+import AdminRoute from "../components/AdminRoute";
 
 const router = createBrowserRouter([
     {
@@ -41,7 +42,11 @@ const router = createBrowserRouter([
     },
     {
         path: "/addCollection",
-        element: <AddProduct />,
+        element: (
+            <AdminRoute>
+                <AddProduct />
+            </AdminRoute>
+        ),
     },
     {
         path: "/collections/:collection/gallery",

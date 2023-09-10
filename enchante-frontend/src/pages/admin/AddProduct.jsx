@@ -66,7 +66,7 @@ export default function AddProduct() {
     };
 
     useEffect(() => {
-        if (userInfo) {
+        if (!userInfo) {
             navigate("/");
         }
     }, [navigate, userInfo]);

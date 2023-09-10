@@ -266,7 +266,7 @@ const NavigationBar = () => {
                                 <MenuItem>
                                     <CustomLink
                                         className="dropdown-item"
-                                        to="#logout"
+                                        to="/"
                                         onClick={logoutHandler}
                                         sx={{
                                             p: 0,
@@ -286,7 +286,6 @@ const NavigationBar = () => {
                                         <CustomLink
                                             className="dropdown-item"
                                             to="/addCollection"
-                                            onClick={logoutHandler}
                                             sx={{
                                                 p: 0,
                                                 fontSize: "0.8rem",

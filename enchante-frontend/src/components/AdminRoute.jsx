@@ -6,7 +6,7 @@ const AdminRoute = ({ children }) => {
     const { state } = useContext(Store);
     const { userInfo } = state;
 
-    return userInfo ? children : <Navigate to="/login" />;
+    return userInfo && userInfo.isAdmin ? children : <Navigate to="/login" />;
 };
 
 export default AdminRoute;

@@ -32,7 +32,6 @@ export default function Login() {
                 password: formData.get("password"),
             });
             ctxDispatch({ type: "USER_LOGIN", payload: data });
-            localStorage.setItem("userInfo", JSON.stringify(data));
             navigate("/");
         } catch (err) {
             setErrorMessage("Invalid Email Id or Password");
