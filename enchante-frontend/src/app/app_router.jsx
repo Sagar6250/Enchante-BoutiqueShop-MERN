@@ -5,11 +5,10 @@ import Product from "../pages/product";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
 import About from "../pages/About";
-// import AdminRoute from "../components/AdminRoute";
 import AddProduct from "../pages/admin/AddProduct";
 import CollectionType from "../pages/collections/CollectionType";
 import Gallery from "../pages/collections/Gallery";
-import AdminRoute from "../components/AdminRoute";
+import AdminGuard from "../Guard/AdminGuard";
 
 const router = createBrowserRouter([
     {
@@ -43,9 +42,9 @@ const router = createBrowserRouter([
     {
         path: "/addCollection",
         element: (
-            <AdminRoute>
+            <AdminGuard>
                 <AddProduct />
-            </AdminRoute>
+            </AdminGuard>
         ),
     },
     {
