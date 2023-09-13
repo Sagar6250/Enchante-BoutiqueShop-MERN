@@ -49,6 +49,32 @@ export const addNewProduct = async (req, res) => {
     res.send({ message: "Product Created", product });
 };
 
+export const updateProduct = async (req, res) => {
+    const product = await Product.findOne({ slug: req.params.slug });
+    if (product) {
+        product.name = req.body.name;
+        product.slug = req.body.name
+            .normalize("NFKD") // split accented characters into their base characters and diacritical marks
+            .replace(/[\u0300-\u036f]/g, "") // remove all the accents, which happen to be all in the \u03xx UNICODE block.
+            .trim() // trim leading or trailing whitespace
+            .toLowerCase() // convert to lowercase
+            .replace(/[^a-z0-9 -]/g, "") // remove non-alphanumeric characters
+            .replace(/\s+/g, "-") // replace spaces with hyphens
+            .replace(/-+/g, "-");
+        product.price = req.body.price;
+        product.count = req.body.count;
+        product.category = req.body.category
+            .toLowerCase()
+            .replace(/ /g, "-")
+            .replace(/[^\w-]+/g, "");
+        product.description = req.body.description;
+        // image: `images/${req.file.filename}`,
+    }
+    await product.save();
+    // console.log(req.file);
+    res.send({ message: "Product Updated", product });
+};
+
 export const getProductsByCollection = async (req, res) => {
     const products = await Product.find({
         category: req.params.collection,

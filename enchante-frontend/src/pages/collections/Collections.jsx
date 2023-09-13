@@ -1,7 +1,8 @@
-import { Stack } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import { RootContainer } from "../../components/layout";
 import { Link } from "react-router-dom";
 import { CustomLink } from "../../components/ui";
+import ImageButton from "../../components/ui/ImageButton";
 
 const collections = () => {
     const collections = [
@@ -17,17 +18,15 @@ const collections = () => {
 
     return (
         <RootContainer>
-            <Stack>
+            <Stack
+                direction="row"
+                spacing={3}
+                useFlexGap
+                flexWrap="wrap"
+                justifyContent="center"
+            >
                 {collections.map((collection, i) => (
-                    <CustomLink
-                        key={i}
-                        to={`${collection
-                            .toLowerCase()
-                            .replace(/ /g, "-")
-                            .replace(/[^\w-]+/g, "")}`}
-                    >
-                        {collection}
-                    </CustomLink>
+                    <ImageButton key={i} name={collection} image={"images"} />
                 ))}
             </Stack>
         </RootContainer>
@@ -35,3 +34,24 @@ const collections = () => {
 };
 
 export default collections;
+
+// <CustomLink
+//     key={i}
+//     to={`${collection
+//         .toLowerCase()
+//         .replace(/ /g, "-")
+//         .replace(/[^\w-]+/g, "")}`}
+// >
+//     {collection}
+// </CustomLink>
+//     <Button
+//         key={i}
+//         variant="contained"
+//         component={Link}
+//         to={`${collection
+//             .toLowerCase()
+//             .replace(/ /g, "-")
+//             .replace(/[^\w-]+/g, "")}`}
+//     >
+//         {collection}
+//     </Button>

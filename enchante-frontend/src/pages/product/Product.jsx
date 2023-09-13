@@ -1,14 +1,18 @@
 import { Box, Button, Divider, Rating, Stack, Typography } from "@mui/material";
-import { useParams } from "react-router-dom";
-import { RootContainer } from "../components/layout";
-import NewArrivals from "../data/LandingPage";
+import { Link, useParams } from "react-router-dom";
+import { RootContainer } from "../../components/layout";
+import NewArrivals from "../../data/LandingPage";
 // import { CounterButton } from "../components/ui";
-import theme from "../theme";
+import theme from "../../theme";
 import StarIcon from "@mui/icons-material/Star";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import { useContext, useEffect, useReducer } from "react";
 import axios from "axios";
-import { Store } from "../store/store";
+import { Store } from "../../store/store";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import Edit from "@mui/icons-material/Edit";
+import AdminGuard from "../../guard/AdminGuard";
 
 const reducer = (state, action) => {
     switch (action.type) {
@@ -53,12 +57,39 @@ const Product = () => {
 
     const addToCart = async (event) => {
         event.preventDefault();
-        
     };
     // const product = NewArrivals.products.find((el) => el.slug === productSlug);
 
     return (
         <RootContainer>
+            {userInfo && userInfo.isAdmin && (
+                <Stack
+                    direction="row"
+                    justifyContent="flex-end"
+                    alignItems="center"
+                >
+                    <Button
+                        component={Link}
+                        to="edit"
+                        variant="contained"
+                        startIcon={<EditIcon />}
+                        sx={{ mx: "0.5rem", p: "0.5rem 1.2rem", width: "8% " }}
+                        size="small"
+                    >
+                        edit
+                    </Button>
+                    <Button
+                        component={Link}
+                        to="delete"
+                        variant="outlined"
+                        startIcon={<DeleteIcon />}
+                        sx={{ mx: "0.5rem", p: "0.5rem 1.2rem", width: "8% " }}
+                        size="small"
+                    >
+                        delete
+                    </Button>
+                </Stack>
+            )}
             <Stack
                 direction="row"
                 // divider={<Divider orientation="vertical" flexItem />}

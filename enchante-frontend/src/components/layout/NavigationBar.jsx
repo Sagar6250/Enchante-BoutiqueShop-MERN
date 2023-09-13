@@ -20,6 +20,8 @@ import { CustomLink } from "../ui";
 import { useContext } from "react";
 import { Store } from "../../store/store";
 import { Link, Navigate } from "react-router-dom";
+// import AdminGuard from "../../guard/AdminGuard";
+// import AuthGuard from "../../guard/AuthGuard";
 // import { Link } from "react-router-dom";
 // import AdbIcon from "@mui/icons-material/Adb";
 // import { EnchanteText } from "../../assets";
@@ -131,7 +133,6 @@ const NavigationBar = () => {
                             />
                         </Link>
                     </Box>
-
                     <Box
                         sx={{
                             flexGrow: 1,
@@ -194,7 +195,6 @@ const NavigationBar = () => {
                             ))}
                         </Menu>
                     </Box>
-
                     {/* <Box sx={{ display: { xs: "none", md: "flex" } }}>
                         <Search>
                             <SearchIconWrapper>
@@ -206,9 +206,7 @@ const NavigationBar = () => {
                             />
                         </Search>
                     </Box> */}
-
                     {/* Phone screen */}
-
                     <Box
                         sx={{
                             flexGrow: 1,
@@ -233,7 +231,6 @@ const NavigationBar = () => {
                             <SearchIcon />
                         </IconButton>
                     </Box>
-
                     {userInfo ? (
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">

@@ -106,7 +106,8 @@ theme.components = {
                 padding: "0.9rem 5rem",
                 borderRadius: "0.75rem",
                 color: theme.palette.secondary.main,
-                border: "3px solid" + theme.palette.secondary.main,
+                outline: "3px solid" + theme.palette.secondary.main,
+                outlineOffset: "-3px",
                 boxShadow: `2px 2px 4px ${hexToRgb(
                     theme.palette.secondary.light ?? "#0"
                 )}`,
@@ -115,7 +116,7 @@ theme.components = {
                         theme.palette.secondary.main + "80"
                     )}`,
                     backgroundColor: theme.palette.secondary.light,
-                    border: "3px solid" + theme.palette.secondary.main,
+                    outline: "3px solid" + theme.palette.secondary.main,
                 },
             },
         },

@@ -6,7 +6,7 @@ const AdminGuard = ({ children }) => {
     const { state } = useContext(Store);
     const { userInfo } = state;
 
-    return userInfo && userInfo.isAdmin ? children : <Navigate to="/login" />;
+    return userInfo && userInfo.isAdmin ? children : <Navigate to="/" />;
 };
 
 export default AdminGuard;

@@ -8,6 +8,7 @@ import {
     getProductById,
     getProductBySlug,
     getProductsByCollection,
+    updateProduct,
 } from "../../controller/product/product_controller.js";
 import { isAdmin, isAuth } from "../../utils/auth_util.js";
 import multer from "multer";
@@ -41,6 +42,8 @@ router.post(
     upload.single("productImage"),
     addNewProduct
 );
+
+router.put("/:slug/updateProduct", updateProduct);
 
 router.get("/getCollection/:collection", getProductsByCollection);
 

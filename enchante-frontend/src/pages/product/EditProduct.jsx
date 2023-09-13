@@ -10,9 +10,9 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 // import { CustomLink } from "../../components/ui";
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useReducer, useState } from "react";
 import { Store } from "../../store/store";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
     Alert,
     // InputLabel,
@@ -21,55 +21,116 @@ import {
     Snackbar,
     Stack,
 } from "@mui/material";
-export default function AddProduct() {
+
+const reducer = (state, action) => {
+    switch (action.type) {
+        case "FETCH_REQUEST":
+            return { ...state, loading: true };
+        case "FETCH_SUCCESS":
+            return { ...state, loading: false };
+        case "FETCH_FAIL":
+            return { ...state, loading: false, error: action.payload };
+        case "UPDATE_REQUEST":
+            return { ...state, loadingUpdate: true };
+        case "UPDATE_SUCCESS":
+            return { ...state, loadingUpdate: false };
+        case "UPDATE_FAIL":
+            return { ...state, loadingUpdate: false };
+        case "UPLOAD_REQUEST":
+            return { ...state, loadingUpload: true, errorUpload: "" };
+        case "UPLOAD_SUCCESS":
+            return {
+                ...state,
+                loadingUpload: false,
+                errorUpload: "",
+            };
+        case "UPLOAD_FAIL":
+            return {
+                ...state,
+                loadingUpload: false,
+                errorUpload: action.payload,
+            };
+
+        default:
+            return state;
+    }
+};
+
+export default function EditProduct() {
+    const params = useParams();
+    const productSlug = params.productSlug;
+    const [{ loading, error, product }, dispatch] = useReducer(reducer, {
+        product: [],
+        loading: true,
+        error: "",
+    });
+
+    const [name, setName] = useState("");
+    const [price, setPrice] = useState("");
+    const [category, setCategory] = useState("");
+    const [count, setCount] = useState("");
+    const [description, setDescription] = useState("");
+
+    const { state, dispatch: ctxDispatch } = useContext(Store);
+    const { userInfo } = state;
+
+    useEffect(() => {
+        const fetchData = async () => {
+            dispatch({ type: "FETCH_REQUEST" });
+            try {
+                const { data } = await axios.get(
+                    `/api/products/slug/${productSlug}`
+                );
+                setName(data.name);
+                setPrice(data.price);
+                setCategory(data.category);
+                setCount(data.count);
+                setDescription(data.description);
+                dispatch({ type: "FETCH_SUCCESS", payload: data });
+            } catch (err) {
+                dispatch({ type: "FETCH_FAIL", payload: err.message });
+            }
+        };
+        fetchData();
+    }, [productSlug]);
+
     const collections = [
         "Traditional Wear",
         "Bridal Wear",
         "Casual Wear",
         "Festive Wear",
         "Accessories",
-        "Men's Wear",
-        "Kid's Wear",
+        "Mens Wear",
+        "Kids Wear",
         "Vintage and Retro",
     ];
 
     const navigate = useNavigate();
 
-    const { state } = useContext(Store);
-    const { userInfo } = state;
-
-    const [file, setFile] = useState();
+    // const [file, setFile] = useState();
     const [errorMessage, setErrorMessage] = useState(null);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
-        formData.append("productImage", file);
         try {
-            const { data } = await axios.post(
-                "/api/products/addProduct",
+            const { data } = await axios.put(
+                `/api/products/${productSlug}/updateProduct`,
                 {
                     name: formData.get("name"),
                     price: formData.get("price"),
                     category: formData.get("collection"),
-                    // category: "lehenga",
                     count: formData.get("count"),
                     description: formData.get("description"),
-                    productImage: formData.get("productImage"),
-                },
-                { headers: { "Content-Type": "multipart/form-data" } }
+                    // productImage: formData.get("productImage"),
+                }
+                // { headers: { "Content-Type": "multipart/form-data" } }
             );
             navigate("/");
         } catch (err) {
-            setErrorMessage("Invalid Email Id or Password");
+            setErrorMessage("Invalid updation");
         }
     };
-
-    useEffect(() => {
-        if (!userInfo) {
-            navigate("/");
-        }
-    }, [navigate, userInfo]);
 
     return (
         <Container component="main" maxWidth="xs">
@@ -82,7 +143,7 @@ export default function AddProduct() {
                 }}
             >
                 <Typography component="h1" variant="h5">
-                    Add Product Item
+                    Edit {product.name}
                 </Typography>
                 <Box
                     component="form"
@@ -97,8 +158,10 @@ export default function AddProduct() {
                         id="collection"
                         label="Collection"
                         name="collection"
-                        autoComplete="collection"
+                        // autoComplete="collection"
                         select
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
                     >
                         {collections.map((option) => (
                             <MenuItem key={option} value={option}>
@@ -108,12 +171,14 @@ export default function AddProduct() {
                     </TextField>
                     <TextField
                         margin="normal"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                         required
                         fullWidth
                         id="name"
                         label="Product Name"
                         name="name"
-                        autoComplete="name"
+                        // autoComplete="name"
                         autoFocus
                     />
                     <Stack direction="row" spacing={2} sx={{ mb: "0.5rem" }}>
@@ -125,10 +190,14 @@ export default function AddProduct() {
                             label="Price"
                             type="number"
                             id="price"
+                            value={price}
+                            onChange={(e) => setPrice(e.target.value)}
                             autoComplete="price"
                         />
                         <TextField
                             margin="normal"
+                            value={count}
+                            onChange={(e) => setCount(e.target.value)}
                             required
                             fullWidth
                             name="count"
@@ -138,7 +207,7 @@ export default function AddProduct() {
                             autoComplete="count"
                         />
                     </Stack>
-                    <input
+                    {/* <input
                         accept="image/*"
                         // className={classes.input}
                         style={{ display: "none" }}
@@ -157,15 +226,16 @@ export default function AddProduct() {
                         >
                             Product Image
                         </Button>
-                    </label>
+                    </label> */}
                     <TextField
                         margin="normal"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
                         required
                         fullWidth
                         multiline
                         name="description"
                         label="Description"
-                        type="number"
                         id="description"
                         autoComplete="description"
                     />
