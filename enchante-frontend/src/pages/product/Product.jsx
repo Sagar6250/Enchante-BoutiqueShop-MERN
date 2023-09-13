@@ -1,12 +1,26 @@
-import { Box, Button, Divider, Rating, Stack, Typography } from "@mui/material";
-import { Link, useParams } from "react-router-dom";
+import {
+    Box,
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Divider,
+    IconButton,
+    Rating,
+    Snackbar,
+    Stack,
+    Typography,
+} from "@mui/material";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { RootContainer } from "../../components/layout";
 import NewArrivals from "../../data/LandingPage";
 // import { CounterButton } from "../components/ui";
 import theme from "../../theme";
 import StarIcon from "@mui/icons-material/Star";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
-import { useContext, useEffect, useReducer } from "react";
+import { useContext, useEffect, useReducer, useState } from "react";
 import axios from "axios";
 import { Store } from "../../store/store";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -29,6 +43,8 @@ const reducer = (state, action) => {
 
 const Product = () => {
     const params = useParams();
+    const navigate = useNavigate();
+
     const productSlug = params.productSlug;
     const [{ loading, error, product }, dispatch] = useReducer(reducer, {
         product: [],
@@ -60,6 +76,32 @@ const Product = () => {
     };
     // const product = NewArrivals.products.find((el) => el.slug === productSlug);
 
+    const [open, setOpen] = useState(false);
+    const [confirm, setConfirm] = useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleConfirmation = () => {
+        setConfirm(false);
+        navigate("/");
+    };
+
+    const deleteItem = async () => {
+        setOpen(false);
+        setConfirm(true);
+        try {
+            await axios.delete(`/api/products/delete/${product._id}`);
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
+
     return (
         <RootContainer>
             {userInfo && userInfo.isAdmin && (
@@ -79,8 +121,7 @@ const Product = () => {
                         edit
                     </Button>
                     <Button
-                        component={Link}
-                        to="delete"
+                        onClick={handleClickOpen}
                         variant="outlined"
                         startIcon={<DeleteIcon />}
                         sx={{ mx: "0.5rem", p: "0.5rem 1.2rem", width: "8% " }}
@@ -88,6 +129,80 @@ const Product = () => {
                     >
                         delete
                     </Button>
+                    <Dialog
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                        fullWidth
+                    >
+                        <DialogTitle id="alert-dialog-title">
+                            <Typography variant="h2">
+                                Do you want to delete {product.name}
+                            </Typography>
+                        </DialogTitle>
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                <Typography variant="body1">
+                                    If you are certain that you want to delete
+                                    this product item, please click the
+                                    {` "Confirm"`} button below. If you do not
+                                    wish to delete this item, you can safely
+                                    disregard this message, and no changes will
+                                    be made.
+                                </Typography>
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button
+                                variant="outlined"
+                                onClick={handleClose}
+                                sx={{ width: "8%" }}
+                                size="small"
+                            >
+                                cancel
+                            </Button>
+                            <Button
+                                variant="contained"
+                                onClick={deleteItem}
+                                sx={{ width: "8%" }}
+                                size="small"
+                                autoFocus
+                            >
+                                confirm
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+                    <Dialog
+                        onClose={handleConfirmation}
+                        aria-labelledby="customized-dialog-title"
+                        open={confirm}
+                    >
+                        <DialogTitle id="customized-dialog-title">
+                            <Typography variant="h2">
+                                Success: {product.name} Deleted
+                            </Typography>
+                        </DialogTitle>
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                <Typography variant="body1">
+                                    This product item has been deleted
+                                    successfully.
+                                </Typography>
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button
+                                variant="text"
+                                onClick={handleConfirmation}
+                                sx={{ width: "8%" }}
+                                size="small"
+                                autoFocus
+                            >
+                                Okay!
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
                 </Stack>
             )}
             <Stack

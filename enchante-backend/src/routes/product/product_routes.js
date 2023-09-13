@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
     addNewProduct,
+    deleteProduct,
     getAllProducts,
     getAllProductsByCollection,
     getNewPorducts,
@@ -44,6 +45,8 @@ router.post(
 );
 
 router.put("/:slug/updateProduct", updateProduct);
+
+router.delete("/delete/:id", deleteProduct);
 
 router.get("/getCollection/:collection", getProductsByCollection);
 

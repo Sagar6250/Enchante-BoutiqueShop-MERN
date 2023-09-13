@@ -75,6 +75,16 @@ export const updateProduct = async (req, res) => {
     res.send({ message: "Product Updated", product });
 };
 
+export const deleteProduct = async (req, res) => {
+    const product = await Product.findById(req.params.id);
+    if (product) {
+        await product.deleteOne();
+        res.send({ message: "Product Deleted" });
+    } else {
+        res.status(404).send({ message: "Product Not Found" });
+    }
+};
+
 export const getProductsByCollection = async (req, res) => {
     const products = await Product.find({
         category: req.params.collection,
