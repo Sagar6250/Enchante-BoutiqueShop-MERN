@@ -10,23 +10,25 @@ import {
     getProductBySlug,
     getProductsByCollection,
     updateProduct,
-} from "../../controller/product/product_controller.js";
+} from "../../controller/product/productController.js";
 import { isAdmin, isAuth } from "../../utils/auth_util.js";
-import multer from "multer";
+import { uploaderFunc } from "../../cloudinary/multerSetup.js";
+
+// import multer from "multer";
 
 const router = Router();
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, "public/images");
-    },
-    filename: function (req, file, cb) {
-        // const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-        cb(null, Date.now() + "-" + file.originalname);
-    },
-});
+// const storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//         cb(null, "public/images");
+//     },
+//     filename: function (req, file, cb) {
+//         // const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+//         cb(null, Date.now() + "-" + file.originalname);
+//     },
+// });
 
-const upload = multer({ storage: storage });
+const upload = uploaderFunc("products");
 
 router.get("/", getAllProducts);
 

@@ -10,10 +10,10 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 // import { Link } from "react-router-dom";
-import { CustomLink } from "../components/ui";
+import { CustomLink } from "../../components/ui";
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import { Store } from "../store/store";
+import { Store } from "../../store/store";
 import axios from "axios";
 import { Alert, Snackbar } from "@mui/material";
 

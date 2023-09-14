@@ -31,30 +31,30 @@ const theme = createTheme({
             color: "#383838",
         },
         h1: {
-            fontFamily: "Noto Sans",
+            fontFamily: "Yeseva One",
             fontSize: "3rem",
             // fontWeight: "bold",
         },
         h2: {
-            fontFamily: "Noto Sans",
+            fontFamily: "Yeseva One",
             fontSize: "2rem",
             // fontWeight: "bold",
         },
         h3: {
-            fontFamily: "Noto Sans",
+            fontFamily: "Yeseva One",
             fontSize: "1.5rem",
             // fontWeight: "bold",
         },
         body1: {
-            fontFamily: "Arimo",
+            fontFamily: "Josefin Sans",
             fontSize: "1rem",
         },
         body2: {
-            fontFamily: "Arimo",
+            fontFamily: "Josefin Sans",
             fontSize: "0.8rem",
         },
         button: {
-            fontFamily: "Arimo",
+            fontFamily: "Josefin Sans",
             fontSize: "1rem",
             // fontWeight: "bold",
         },

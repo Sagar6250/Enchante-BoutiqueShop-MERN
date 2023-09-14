@@ -7,15 +7,14 @@ import {
     DialogContentText,
     DialogTitle,
     Divider,
-    IconButton,
+    // IconButton,
     Rating,
-    Snackbar,
+    // Snackbar,
     Stack,
     Typography,
 } from "@mui/material";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { RootContainer } from "../../components/layout";
-import NewArrivals from "../../data/LandingPage";
 // import { CounterButton } from "../components/ui";
 import theme from "../../theme";
 import StarIcon from "@mui/icons-material/Star";
@@ -25,8 +24,7 @@ import axios from "axios";
 import { Store } from "../../store/store";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import Edit from "@mui/icons-material/Edit";
-import AdminGuard from "../../guard/AdminGuard";
+// import AdminGuard from "../../guard/AdminGuard";
 
 const reducer = (state, action) => {
     switch (action.type) {
@@ -214,7 +212,7 @@ const Product = () => {
                 <Box sx={{ m: "2rem", width: "35%" }}>
                     <img
                         style={{ width: "100%", margin: 0, padding: 0 }}
-                        src={import.meta.env.VITE_API_URL + "/" + product.image}
+                        src={product.image}
                     />
                 </Box>
                 <Stack

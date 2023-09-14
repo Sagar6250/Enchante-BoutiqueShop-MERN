@@ -1,3 +1,4 @@
+import { cloudinary } from "../../cloudinary/cloudinarySetup.js";
 import Product from "../../model/productModel.js";
 
 export const getAllProducts = async (req, res) => {
@@ -42,7 +43,7 @@ export const addNewProduct = async (req, res) => {
         rating: 0,
         numReviews: 0,
         description: req.body.description,
-        image: `images/${req.file.filename}`,
+        image: req.file.path,
     });
     const product = await newProduct.save();
     console.log(req.file);
@@ -77,6 +78,7 @@ export const updateProduct = async (req, res) => {
 
 export const deleteProduct = async (req, res) => {
     const product = await Product.findById(req.params.id);
+    await cloudinary.uploader.destroy(product.image);
     if (product) {
         await product.deleteOne();
         res.send({ message: "Product Deleted" });

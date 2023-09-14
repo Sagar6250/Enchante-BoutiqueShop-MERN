@@ -61,8 +61,9 @@ const Home = () => {
                     variant="h2"
                     align="center"
                     gutterBottom
+                    sx={{ mt: "1.5rem" }}
                 >
-                    NEW ARRIVALS
+                    New Arrivals
                 </Typography>
                 <Typography
                     component="h2"

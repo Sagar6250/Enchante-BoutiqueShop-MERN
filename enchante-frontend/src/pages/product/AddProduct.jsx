@@ -22,16 +22,23 @@ import {
     Stack,
 } from "@mui/material";
 export default function AddProduct() {
-    const collections = [
-        "Traditional Wear",
-        "Bridal Wear",
-        "Casual Wear",
-        "Festive Wear",
-        "Accessories",
-        "Men's Wear",
-        "Kid's Wear",
-        "Vintage and Retro",
-    ];
+    const [collections, setCollection] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const { data } = await axios.get(
+                    "/api/service/getAllCollections"
+                );
+                setCollection(data);
+                console.log(collections);
+                // console.log(result);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchData();
+    }, []);
 
     const navigate = useNavigate();
 
@@ -94,9 +101,12 @@ export default function AddProduct() {
                         autoComplete="collection"
                         select
                     >
-                        {collections.map((option) => (
-                            <MenuItem key={option} value={option}>
-                                {option}
+                        {collections.map((collection) => (
+                            <MenuItem
+                                key={collection._id}
+                                value={collection.slug}
+                            >
+                                {collection.name}
                             </MenuItem>
                         ))}
                     </TextField>

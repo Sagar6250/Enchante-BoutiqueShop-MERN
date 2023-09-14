@@ -1,23 +1,45 @@
-import { Button, Stack } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import { RootContainer } from "../../components/layout";
 import { Link } from "react-router-dom";
 import { CustomLink } from "../../components/ui";
 import ImageButton from "../../components/ui/ImageButton";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-const collections = () => {
-    const collections = [
-        "Traditional Wear",
-        "Bridal Wear",
-        "Casual Wear",
-        "Festive Wear",
-        "Accessories",
-        "Men's Wear",
-        "Kid's Wear",
-        "Vintage and Retro",
-    ];
+const Collections = () => {
+    // const collections = [
+    //     "Traditional Wear",
+    //     "Bridal Wear",
+    //     "Casual Wear",
+    //     "Festive Wear",
+    //     "Accessories",
+    //     "Men's Wear",
+    //     "Kid's Wear",
+    //     "Vintage and Retro",
+    // ];
 
+    const [collections, setCollection] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const { data } = await axios.get(
+                    "/api/service/getAllCollections"
+                );
+                setCollection(data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchData();
+    }, []);
+
+    // console.log(collections);
     return (
         <RootContainer>
+            <Typography variant="h1" align="center" sx={{ m: "2rem" }}>
+                Collections
+            </Typography>
             <Stack
                 direction="row"
                 spacing={3}
@@ -26,14 +48,19 @@ const collections = () => {
                 justifyContent="center"
             >
                 {collections.map((collection, i) => (
-                    <ImageButton key={i} name={collection} image={"images"} />
+                    <ImageButton
+                        key={i}
+                        name={collection.name}
+                        slug={collection.slug}
+                        image={collection.image}
+                    />
                 ))}
             </Stack>
         </RootContainer>
     );
 };
 
-export default collections;
+export default Collections;
 
 // <CustomLink
 //     key={i}

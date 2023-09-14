@@ -68,8 +68,8 @@ const ImageMarked = styled("span")(({ theme }) => ({
     left: "calc(50% - 9px)",
     transition: theme.transitions.create("opacity"),
 }));
-
-const ImageButton = ({ name, image }) => {
+const ImageButton = ({ name, image, slug }) => {
+    console.log(`url('${image}')`);
     return (
         <Image_Button
             focusRipple
@@ -78,12 +78,15 @@ const ImageButton = ({ name, image }) => {
                 width: "30%",
             }}
             component={Link}
-            to={`${name
-                .toLowerCase()
-                .replace(/ /g, "-")
-                .replace(/[^\w-]+/g, "")}`}
+            to={`${slug}`}
         >
-            <ImageSrc style={{ backgroundImage: `${image}` }} />
+            <ImageSrc
+                style={{
+                    backgroundImage: `url('${
+                        import.meta.env.VITE_API_URL + "/" + image
+                    }')`,
+                }}
+            />
             <ImageBackdrop className="MuiImageBackdrop-root" />
             <Image>
                 <Typography

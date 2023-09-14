@@ -94,16 +94,23 @@ export default function EditProduct() {
         fetchData();
     }, [productSlug]);
 
-    const collections = [
-        "Traditional Wear",
-        "Bridal Wear",
-        "Casual Wear",
-        "Festive Wear",
-        "Accessories",
-        "Mens Wear",
-        "Kids Wear",
-        "Vintage and Retro",
-    ];
+    const [collections, setCollection] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const { data } = await axios.get(
+                    "/api/service/getAllCollections"
+                );
+                setCollection(data);
+                console.log(collections);
+                // console.log(result);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchData();
+    }, []);
 
     const navigate = useNavigate();
 
@@ -163,9 +170,12 @@ export default function EditProduct() {
                         value={category}
                         onChange={(e) => setCategory(e.target.value)}
                     >
-                        {collections.map((option) => (
-                            <MenuItem key={option} value={option}>
-                                {option}
+                        {collections.map((collection) => (
+                            <MenuItem
+                                key={collection._id}
+                                value={collection.slug}
+                            >
+                                {collection.name}
                             </MenuItem>
                         ))}
                     </TextField>

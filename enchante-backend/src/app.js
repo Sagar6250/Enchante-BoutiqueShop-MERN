@@ -2,11 +2,15 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import express from "express";
 import authroutes from "./routes/auth/auth_routes.js";
-import productroutes from "./routes/product/product_routes.js";
+import productroutes from "./routes/product/productRoutes.js";
+import serviceroutes from "./routes/product/serviceRoutes.js";
 import * as path from "path";
 if (process.env.NODE_ENV !== "production") {
     dotenv.config();
 }
+
+import "./cloudinary/cloudinarySetup.js";
+import "./cloudinary/multerSetup.js";
 
 const app = express();
 const port = process.env.PORT ?? 5000;
@@ -28,6 +32,8 @@ main();
 app.use("/api/auth", authroutes);
 
 app.use("/api/products", productroutes);
+
+app.use("/api/service", serviceroutes);
 
 // app.use("/api/users", userRouter)
 //You enabled public folder access? I dont think so.... idk how to -- wait
