@@ -98,7 +98,6 @@ theme.components = {
                 "&:hover": {
                     color: theme.palette.secondary.dark,
                     borderRadius: "0rem",
-                    borderBottom: "2px solid" + theme.palette.secondary.dark,
                 },
             },
             outlined: {

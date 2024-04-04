@@ -1,9 +1,16 @@
 import Collection from "../../model/collectionModel.js";
 
 export const getAllCollections = async (req, res) => {
-    const collections = await Collection.find();
+    var collections = await Collection.find();
     if (collections) {
         res.send(collections);
+    }
+};
+
+export const getCollection = async (req, res) => {
+    const collection = await Collection.findOne({ slug: req.params.slug });
+    if (collection) {
+        res.send(collection);
     }
 };
 
@@ -21,9 +28,29 @@ export const addNewCollection = async (req, res) => {
             .replace(/-+/g, "-"),
         description: req.body.description,
         // image: `images/${req.file.filename}`,
-        image: req.body.image,
+        imageName: req.file.filename,
+        imagePath: req.file.path,
     });
     const collection = await newCollection.save();
     // console.log(req.file);
     res.send({ message: "Collection Created", collection });
+};
+
+export const updateCollection = async (req, res) => {
+    // const collection = await Collection.findOne({ slug: req.params.slug });
+    // if (collection) {
+    //     // if (req.body.name) {
+    //     //     collection.name = req.body.name;
+    //     // }
+    //     // if (req.body.description) {
+    //     //     collection.description = req.body.description;
+    //     // }
+    //     collection = { ...req.body };
+    // }
+    const collection = await Collection.findOneAndUpdate(
+        { slug: req.params.slug },
+        { ...req.body },
+        { new: true }
+    );
+    return res.json({ message: "Updated", collection });
 };

@@ -79,7 +79,7 @@ export default function EditProduct() {
             dispatch({ type: "FETCH_REQUEST" });
             try {
                 const { data } = await axios.get(
-                    `/api/products/slug/${productSlug}`
+                    `/api/products/${productSlug}?searchType=slug`
                 );
                 setName(data.name);
                 setPrice(data.price);
@@ -99,9 +99,7 @@ export default function EditProduct() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data } = await axios.get(
-                    "/api/service/getAllCollections"
-                );
+                const { data } = await axios.get("/api/service/");
                 setCollection(data);
                 console.log(collections);
                 // console.log(result);
@@ -121,8 +119,8 @@ export default function EditProduct() {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
         try {
-            const { data } = await axios.put(
-                `/api/products/${productSlug}/updateProduct`,
+            const { data } = await axios.patch(
+                `/api/products/${productSlug}`,
                 {
                     name: formData.get("name"),
                     price: formData.get("price"),

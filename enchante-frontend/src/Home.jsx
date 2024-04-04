@@ -34,7 +34,7 @@ const Home = () => {
             // setProducts(result.data);
             dispatch({ type: "FETCH_REQUEST" });
             try {
-                const result = await axios.get("/api/products/new");
+                const result = await axios.get("/api/products?limit=5");
                 dispatch({ type: "FETCH_SUCCESS", payload: result.data });
             } catch (err) {
                 dispatch({ type: "FETCH_FAIL", payload: err.message });
@@ -86,7 +86,7 @@ const Home = () => {
                             key={product._id}
                             name={product.name}
                             price={product.price}
-                            image={product.image}
+                            image={product.imagePath}
                             slug={product.slug}
                         />
                     ))}

@@ -69,7 +69,7 @@ const ImageMarked = styled("span")(({ theme }) => ({
     transition: theme.transitions.create("opacity"),
 }));
 const ImageButton = ({ name, image, slug }) => {
-    console.log(`url('${image}')`);
+    // console.log(`url('${image}')`);
     return (
         <Image_Button
             focusRipple
@@ -82,9 +82,7 @@ const ImageButton = ({ name, image, slug }) => {
         >
             <ImageSrc
                 style={{
-                    backgroundImage: `url('${
-                        import.meta.env.VITE_API_URL + "/" + image
-                    }')`,
+                    backgroundImage: `url('${image}')`,
                 }}
             />
             <ImageBackdrop className="MuiImageBackdrop-root" />

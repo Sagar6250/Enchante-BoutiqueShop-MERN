@@ -23,7 +23,7 @@ const ClothCard = ({ name, price, image, slug }) => {
                     component="img"
                     height="315"
                     sx={{ objectFit: "cover" }}
-                    image={import.meta.env.VITE_API_URL + "/" + image}
+                    image={image}
                     alt={name}
                 />
                 <CardContent>

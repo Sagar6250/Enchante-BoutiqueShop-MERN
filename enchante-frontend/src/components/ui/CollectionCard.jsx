@@ -30,7 +30,7 @@ const CollectionCard = ({ key, id, image, name, description }) => {
         >
             {/* <Box width="10%"> */}
             <img
-                src={import.meta.env.VITE_API_URL + "/" + image}
+                src={image}
                 alt=""
                 style={{ objectFit: "cover", height: 315, width: 445 }}
             />

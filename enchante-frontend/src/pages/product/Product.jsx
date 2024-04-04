@@ -7,8 +7,10 @@ import {
     DialogContentText,
     DialogTitle,
     Divider,
+    MenuItem,
     // IconButton,
     Rating,
+    Select,
     // Snackbar,
     Stack,
     Typography,
@@ -58,7 +60,7 @@ const Product = () => {
             dispatch({ type: "FETCH_REQUEST" });
             try {
                 const result = await axios.get(
-                    `/api/products/slug/${productSlug}`
+                    `/api/products/${productSlug}?searchType=slug`
                 );
                 // console.log(result);
                 dispatch({ type: "FETCH_SUCCESS", payload: result.data });
@@ -68,14 +70,27 @@ const Product = () => {
         };
         fetchData();
     }, []);
-
+    console.log(userInfo._id);
     const addToCart = async (event) => {
         event.preventDefault();
+        try {
+            const { data } = await axios.post(
+                `/api/cart/addToCart/${product._id}`,
+                {
+                    userId: userInfo._id,
+                    quantity: quantity,
+                }
+            );
+            navigate("/cart");
+        } catch (err) {
+            console.log({ message: "Invalid Product" });
+        }
     };
     // const product = NewArrivals.products.find((el) => el.slug === productSlug);
 
     const [open, setOpen] = useState(false);
     const [confirm, setConfirm] = useState(false);
+    const [quantity, setQuantity] = useState(1);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -94,12 +109,12 @@ const Product = () => {
         setOpen(false);
         setConfirm(true);
         try {
-            await axios.delete(`/api/products/delete/${product._id}`);
+            await axios.delete(`/api/products/${product._id}`);
         } catch (error) {
             console.log(error.message);
         }
     };
-
+    console.log(quantity);
     return (
         <RootContainer>
             {userInfo && userInfo.isAdmin && (
@@ -212,7 +227,7 @@ const Product = () => {
                 <Box sx={{ m: "2rem", width: "35%" }}>
                     <img
                         style={{ width: "100%", margin: 0, padding: 0 }}
-                        src={product.image}
+                        src={product.imagePath}
                     />
                 </Box>
                 <Stack
@@ -273,6 +288,38 @@ const Product = () => {
                     >
                         inclusive of all taxes
                     </Typography>
+                    <Stack
+                        direction="row"
+                        // width="100%"
+                        alignItems="center"
+                        justifyContent="center"
+                        sx={{ mt: "1rem" }}
+                        spacing={2}
+                    >
+                        <Typography
+                            variant="body1"
+                            // sx={{ color: theme.palette.secondary.dark }}
+                        >
+                            Quantity:
+                        </Typography>
+                        <Select
+                            size="small"
+                            variant="standard"
+                            sx={{ pl: "1rem" }}
+                            defaultValue={1}
+                            value={quantity}
+                            label="Quantity"
+                            onChange={(e) => setQuantity(e.target.value)}
+                        >
+                            {[...Array(10)].map((i, qty) => (
+                                <MenuItem key={i} value={qty + 1}>
+                                    {qty + 1}
+                                </MenuItem>
+                            ))}
+                            {/* <MenuItem value={2}>Twenty</MenuItem>
+                        <MenuItem value={3}>Thirty</MenuItem> */}
+                        </Select>
+                    </Stack>
                     <Stack
                         direction="row"
                         width="100%"

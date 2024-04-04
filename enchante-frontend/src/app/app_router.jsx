@@ -10,6 +10,7 @@ import CollectionType from "../pages/collections/CollectionType";
 import Gallery from "../pages/collections/Gallery";
 import AdminGuard from "../guard/AdminGuard";
 import EditProduct from "../pages/product/EditProduct";
+import Cart from "../pages/collections/Cart";
 
 const router = createBrowserRouter([
     {
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
     {
         path: "/collections/:collection/gallery",
         element: <Gallery />,
+    },
+    {
+        path: "/cart",
+        element: <Cart />,
     },
 ]);
 

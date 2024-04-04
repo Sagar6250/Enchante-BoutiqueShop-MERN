@@ -1,11 +1,20 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { RootContainer } from "../../components/layout";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { Box, Button, Stack, Typography } from "@mui/material";
+import {
+    Box,
+    Button,
+    Container,
+    Paper,
+    Stack,
+    Typography,
+    colors,
+} from "@mui/material";
 import CollectionCard from "../../components/ui/CollectionCard";
 import { CustomLink } from "../../components/ui";
 import theme from "../../theme";
+import styled from "@emotion/styled";
 
 const reducer = (state, action) => {
     switch (action.type) {
@@ -29,12 +38,27 @@ const CollectionType = () => {
         error: "",
     });
 
+    const [collItems, setCollItems] = useState({});
+    // console.log(collItems.name);
+    useEffect(() => {
+        const fetchCollection = async () => {
+            try {
+                const { data } = await axios.get(`/api/service/${collection}`);
+                // console.log(data);
+                setCollItems(data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        fetchCollection();
+    }, []);
+
     useEffect(() => {
         const fetchData = async () => {
             dispatch({ type: "FETCH_REQUEST" });
             try {
                 const result = await axios.get(
-                    `/api/products/getCollection/${collection}`
+                    `/api/products/collection/${collection}?limit=10`
                 );
                 // console.log(result);
                 dispatch({ type: "FETCH_SUCCESS", payload: result.data });
@@ -56,15 +80,56 @@ const CollectionType = () => {
 
     return (
         <RootContainer>
-            <Typography variant="h1" align="center" sx={{ my: "1rem" }}>
-                {name}
-            </Typography>
+            <Paper
+                elevation={0}
+                sx={{
+                    mt: "-2rem",
+                    backgroundImage: `url(${collItems.imagePath})`,
+                    backgroundSize: "cover",
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center ",
+                    height: "50vh",
+                }}
+            >
+                <Paper
+                    elevation={0}
+                    sx={{
+                        backgroundColor: "#00000060",
+                        // opacity: "60%",
+                        height: "50vh",
+                        py: "1rem",
+                    }}
+                >
+                    <Stack justifyContent="space-evenly">
+                        <Typography
+                            variant="h1"
+                            align="center"
+                            sx={{
+                                my: "1rem",
+                                color: theme.palette.primary.main,
+                            }}
+                        >
+                            {collItems.name}
+                        </Typography>
+                        <Typography
+                            variant="body1"
+                            align="center"
+                            sx={{
+                                my: "1rem",
+                                color: theme.palette.primary.main,
+                            }}
+                        >
+                            {collItems.description}
+                        </Typography>
+                    </Stack>
+                </Paper>
+            </Paper>
             <Stack justifyContent="flex-end">
                 {product.map((p, i) => (
                     <CollectionCard
                         key={i}
                         id={i}
-                        image={p.image}
+                        image={p.imagePath}
                         name={p.name}
                         description={p.description}
                     />

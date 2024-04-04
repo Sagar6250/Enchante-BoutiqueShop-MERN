@@ -35,6 +35,7 @@ export default function SignUp() {
             const { data } = await axios.post("/api/auth/singup", {
                 fullName:
                     formData.get("firstName") + " " + formData.get("lastName"),
+                username: formData.get("username"),
                 email: formData.get("email"),
                 password: formData.get("password"),
             });
@@ -104,6 +105,16 @@ export default function SignUp() {
                                 label="Email Address"
                                 name="email"
                                 autoComplete="email"
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                required
+                                fullWidth
+                                id="username"
+                                label="User Name"
+                                name="username"
+                                autoComplete="username"
                             />
                         </Grid>
                         <Grid item xs={12}>

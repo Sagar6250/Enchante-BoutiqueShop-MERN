@@ -27,9 +27,7 @@ export default function AddProduct() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data } = await axios.get(
-                    "/api/service/getAllCollections"
-                );
+                const { data } = await axios.get("/api/service");
                 setCollection(data);
                 console.log(collections);
                 // console.log(result);
@@ -54,7 +52,7 @@ export default function AddProduct() {
         formData.append("productImage", file);
         try {
             const { data } = await axios.post(
-                "/api/products/addProduct",
+                "/api/products",
                 {
                     name: formData.get("name"),
                     price: formData.get("price"),

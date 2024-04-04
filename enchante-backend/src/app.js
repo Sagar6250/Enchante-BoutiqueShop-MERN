@@ -4,6 +4,7 @@ import express from "express";
 import authroutes from "./routes/auth/auth_routes.js";
 import productroutes from "./routes/product/productRoutes.js";
 import serviceroutes from "./routes/product/serviceRoutes.js";
+import cartroutes from "./routes/product/cartRoutes.js";
 import * as path from "path";
 if (process.env.NODE_ENV !== "production") {
     dotenv.config();
@@ -34,6 +35,8 @@ app.use("/api/auth", authroutes);
 app.use("/api/products", productroutes);
 
 app.use("/api/service", serviceroutes);
+
+app.use("/api/cart", cartroutes);
 
 // app.use("/api/users", userRouter)
 //You enabled public folder access? I dont think so.... idk how to -- wait

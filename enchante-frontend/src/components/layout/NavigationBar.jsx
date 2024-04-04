@@ -20,6 +20,7 @@ import { CustomLink } from "../ui";
 import { useContext } from "react";
 import { Store } from "../../store/store";
 import { Link, Navigate } from "react-router-dom";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 // import AdminGuard from "../../guard/AdminGuard";
 // import AuthGuard from "../../guard/AuthGuard";
 // import { Link } from "react-router-dom";
@@ -231,6 +232,13 @@ const NavigationBar = () => {
                             <SearchIcon />
                         </IconButton>
                     </Box>
+                    <IconButton
+                        component={Link}
+                        to={userInfo ? "/cart" : "/login"}
+                        sx={{ mx: "1rem" }}
+                    >
+                        <ShoppingCartIcon />
+                    </IconButton>
                     {userInfo ? (
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">

@@ -21,6 +21,7 @@ export const login = async (req, res, next) => {
 export const signup = async (req, res, next) => {
     const newUser = new User({
         fullName: req.body.fullName,
+        username: req.body.username,
         email: req.body.email,
         password: req.body.password,
     });

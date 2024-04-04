@@ -63,13 +63,6 @@ const Footer = () => {
                                 // my: "0rem",
                                 fontSize: "0.8rem",
                                 color: theme.palette.primary.main,
-                                "&.MuiButtonBase-root:hover": {
-                                    bgcolor: "transparent",
-                                },
-                                "&:hover": {
-                                    color: theme.palette.primary.main,
-                                    borderBottom: "0px",
-                                },
                             }}
                         >
                             Dashboard
@@ -81,13 +74,6 @@ const Footer = () => {
                                 // my: "0.5rem",
                                 fontSize: "0.8rem",
                                 color: theme.palette.primary.main,
-                                "&.MuiButtonBase-root:hover": {
-                                    bgcolor: "transparent",
-                                },
-                                "&:hover": {
-                                    color: theme.palette.primary.main,
-                                    borderBottom: "0px",
-                                },
                             }}
                         >
                             About us
@@ -99,13 +85,6 @@ const Footer = () => {
                                 // my: "0.5rem",
                                 fontSize: "0.8rem",
                                 color: theme.palette.primary.main,
-                                "&.MuiButtonBase-root:hover": {
-                                    bgcolor: "transparent",
-                                },
-                                "&:hover": {
-                                    color: theme.palette.primary.main,
-                                    borderBottom: "0px",
-                                },
                             }}
                         >
                             Return & Refund Policy
@@ -117,13 +96,6 @@ const Footer = () => {
                                 // my: "0.5rem",
                                 fontSize: "0.8rem",
                                 color: theme.palette.primary.main,
-                                "&.MuiButtonBase-root:hover": {
-                                    bgcolor: "transparent",
-                                },
-                                "&:hover": {
-                                    color: theme.palette.primary.main,
-                                    borderBottom: "0px",
-                                },
                             }}
                         >
                             Privacy policy
@@ -135,13 +107,6 @@ const Footer = () => {
                                 // my: "0.5rem",
                                 fontSize: "0.8rem",
                                 color: theme.palette.primary.main,
-                                "&.MuiButtonBase-root:hover": {
-                                    bgcolor: "transparent",
-                                },
-                                "&:hover": {
-                                    color: theme.palette.primary.main,
-                                    borderBottom: "0px",
-                                },
                             }}
                         >
                             Contact us

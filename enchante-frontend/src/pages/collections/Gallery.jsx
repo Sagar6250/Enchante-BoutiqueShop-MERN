@@ -32,7 +32,7 @@ const Gallery = () => {
             dispatch({ type: "FETCH_REQUEST" });
             try {
                 const result = await axios.get(
-                    `/api/products/getAllCollection/${collection}`
+                    `/api/products/collection/${collection}`
                 );
                 // console.log(result);
                 dispatch({ type: "FETCH_SUCCESS", payload: result.data });
@@ -57,7 +57,7 @@ const Gallery = () => {
                         key={product._id}
                         name={product.name}
                         price={product.price}
-                        image={product.image}
+                        image={product.imagePath}
                         slug={product.slug}
                     />
                 ))}

@@ -23,9 +23,7 @@ const Collections = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data } = await axios.get(
-                    "/api/service/getAllCollections"
-                );
+                const { data } = await axios.get("/api/service");
                 setCollection(data);
             } catch (err) {
                 console.log(err);
@@ -52,7 +50,7 @@ const Collections = () => {
                         key={i}
                         name={collection.name}
                         slug={collection.slug}
-                        image={collection.image}
+                        image={collection.imagePath}
                     />
                 ))}
             </Stack>
